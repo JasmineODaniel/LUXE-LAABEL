@@ -1,0 +1,145 @@
+.music-promo {
+  padding: 28px 120px 48px;
+  background: #fff;
+}
+
+.music-promo__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.music-promo__card {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  background: radial-gradient(circle at 35% 40%, #1b1b1b 0%, #090909 60%, #050505 100%);
+  border-radius: 8px;
+  min-height: 360px;
+  padding: 48px 56px;
+}
+
+.music-promo__content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  color: #f9fafb;
+  z-index: 2;
+}
+
+.music-promo__eyebrow {
+  color: #1ed760;
+  font-weight: 700;
+  font-size: 15px;
+  margin: 0;
+}
+
+.music-promo__heading {
+  margin: 0;
+  font-size: 34px;
+  line-height: 1.25;
+  font-weight: 700;
+  color: #f9fafb;
+}
+
+.music-promo__countdown {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.music-promo__pill {
+  width: 70px;
+  height: 70px;
+  border-radius: 999px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #111;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
+}
+
+.music-promo__pill-value {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.music-promo__pill-label {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.music-promo__cta {
+  width: 140px;
+  margin-top: 8px;
+  background: #00d98b;
+  color: #0b0b0b;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.music-promo__cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+}
+
+.music-promo__visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.music-promo__glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5));
+  filter: blur(8px);
+}
+
+.music-promo__image {
+  position: relative;
+  max-width: 420px;
+  width: 100%;
+  object-fit: contain;
+  z-index: 2;
+}
+
+@media (max-width: 1100px) {
+  .music-promo {
+    padding: 24px 32px 40px;
+  }
+
+  .music-promo__card {
+    grid-template-columns: 1fr;
+    padding: 40px;
+    row-gap: 24px;
+    text-align: center;
+  }
+
+  .music-promo__content {
+    align-items: center;
+  }
+
+  .music-promo__visual {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 720px) {
+  .music-promo__card {
+    padding: 32px 24px;
+  }
+
+  .music-promo__countdown {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
