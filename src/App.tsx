@@ -1,3 +1,5 @@
+import { Routes, Route } from "react-router-dom";
+import ProductsPage from "./pages/ProductsPage";
 import PromoBar from "./components/layout/PromoBar";
 import Navbar from "./components/layout/Navbar";
 import Hero from "./components/home/Hero";
@@ -9,25 +11,31 @@ import ExploreProducts from "./components/home/ExploreProducts";
 import NewArrival from "./components/home/NewArrival";
 import Footer from "./components/layout/Footer";
 
-function App() {
+export default function App() {
   return (
     <div className="font-sans">
       <PromoBar />
       <Navbar />
 
-      <main>
-        <Hero />
-        <FlashSales />
-        <Categories />
-        <BestSelling />
-        <MusicPromo />
-        <ExploreProducts />
-        <NewArrival />
-      </main>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <Hero />
+              <FlashSales />
+              <Categories />
+              <BestSelling />
+              <MusicPromo />
+              <ExploreProducts />
+              <NewArrival />
+            </>
+          }
+        />
+        <Route path="/products" element={<ProductsPage />} />
+      </Routes>
 
       <Footer />
     </div>
   );
 }
-
-export default App;

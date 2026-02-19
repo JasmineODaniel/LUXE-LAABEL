@@ -1,7 +1,9 @@
+import { useEffect, useMemo, useState } from "react";
 import "./ExploreProducts.css";
 import { HiOutlineHeart, HiOutlineEye } from "react-icons/hi";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaStar } from "react-icons/fa";
+import { useResponsiveColumns } from "../../hooks/useResponsiveColumns";
 
 type Product = {
   title: string;
@@ -80,6 +82,11 @@ const products: Product[] = [
   },
 ];
 
+const exploreBreakpoints = [
+  { width: 720, cols: 1 },
+  { width: 1100, cols: 2 },
+];
+
 function Stars() {
   return (
     <span className="explore-card__stars">
@@ -93,6 +100,29 @@ function Stars() {
 }
 
 export default function ExploreProducts() {
+  const visibleCount = useResponsiveColumns(4, exploreBreakpoints);
+  const [startIndex, setStartIndex] = useState(0);
+
+  useEffect(() => {
+    setStartIndex(0);
+  }, [visibleCount]);
+
+  const visibleProducts = useMemo(() => {
+    const count = Math.min(visibleCount, products.length);
+    return Array.from({ length: count }, (_, idx) => {
+      const nextIndex = (startIndex + idx) % products.length;
+      return products[nextIndex];
+    });
+  }, [startIndex, visibleCount]);
+
+  const handleNext = () => {
+    setStartIndex((prev) => (prev + visibleCount) % products.length);
+  };
+
+  const handlePrev = () => {
+    setStartIndex((prev) => (prev - visibleCount + products.length) % products.length);
+  };
+
   return (
     <section className="explore" id="explore-products">
       <div className="explore__inner">
@@ -106,17 +136,27 @@ export default function ExploreProducts() {
           </div>
 
           <div className="explore__controls">
-            <button className="explore__control" aria-label="Previous">
+            <button
+              className="explore__control"
+              aria-label="Previous products"
+              type="button"
+              onClick={handlePrev}
+            >
               <IoIosArrowBack />
             </button>
-            <button className="explore__control" aria-label="Next">
+            <button
+              className="explore__control"
+              aria-label="Next products"
+              type="button"
+              onClick={handleNext}
+            >
               <IoIosArrowForward />
             </button>
           </div>
         </header>
 
         <div className="explore__grid">
-          {products.map((product) => (
+          {visibleProducts.map((product) => (
             <article className="explore-card" key={product.title}>
               <div className="explore-card__media">
                 {product.badge === "new" && (

@@ -30,6 +30,14 @@ export default function Categories() {
     categories.findIndex((c) => c.active) || 0
   );
 
+  const handlePrev = () => {
+    setActiveIndex((prev) => (prev - 1 + categories.length) % categories.length);
+  };
+
+  const handleNext = () => {
+    setActiveIndex((prev) => (prev + 1) % categories.length);
+  };
+
   return (
     <section className="categories" id="categories">
       <div className="categories__inner">
@@ -47,6 +55,7 @@ export default function Categories() {
               className="categories__control"
               aria-label="Previous categories"
               type="button"
+              onClick={handlePrev}
             >
               <IoIosArrowBack />
             </button>
@@ -54,6 +63,7 @@ export default function Categories() {
               className="categories__control"
               aria-label="Next categories"
               type="button"
+              onClick={handleNext}
             >
               <IoIosArrowForward />
             </button>

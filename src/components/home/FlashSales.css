@@ -318,3 +318,6 @@
     grid-template-columns: 1fr;
   }
 }
+.flash-card__icon.is-liked {
+  color: red;
+}
