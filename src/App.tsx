@@ -10,6 +10,7 @@ import MusicPromo from "./components/home/MusicPromo";
 import ExploreProducts from "./components/home/ExploreProducts";
 import NewArrival from "./components/home/NewArrival";
 import Footer from "./components/layout/Footer";
+import CategoryPage from "./pages/CategoryPage";
 
 export default function App() {
   return (
@@ -33,6 +34,8 @@ export default function App() {
           }
         />
         <Route path="/products" element={<ProductsPage />} />
+        <Route path="/category/:slug" element={<CategoryPage />} />
+        <Route path="/category" element={<CategoryPage />} />
       </Routes>
 
       <Footer />

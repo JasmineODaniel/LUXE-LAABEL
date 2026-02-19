@@ -12,18 +12,19 @@ import heroImgAirPods from "../../assets/airpods-pro-2.jpg";
 import heroImg2 from "../../assets/macbookpro.jpg";
 import heroImgHomePod from "../../assets/home-pod-mini.jpg";
 import { useCartStore } from "../../store/cart";
+import { useNavigate } from "react-router-dom";
 
-// Categories 
+// Categories restored (with API targets)
 const categories = [
-  "Woman's Fashion",
-  "Men's Fashion",
-  "Electronics",
-  "Home & Lifestyle",
-  "Medicine",
-  "Sports & Outdoor",
-  "Baby's & Toys",
-  "Groceries & Pets",
-  "Health & Beauty",
+  { label: "Woman's Fashion", slug: "women's clothing" },
+  { label: "Men's Fashion", slug: "men's clothing" },
+  { label: "Electronics", slug: "electronics" },
+  { label: "Home & Lifestyle", slug: "" },
+  { label: "Medicine", slug: "" },
+  { label: "Sports & Outdoor", slug: "" },
+  { label: "Baby's & Toys", slug: "" },
+  { label: "Groceries & Pets", slug: "" },
+  { label: "Health & Beauty", slug: "" },
 ];
 
 // Slides (order preserved for slider)
@@ -89,6 +90,7 @@ export default function Hero() {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
   const addItem = useCartStore((s) => s.addItem);
+  const navigate = useNavigate();
 
   // Auto-slide
   useEffect(() => {
@@ -146,8 +148,26 @@ export default function Hero() {
         <aside className="hero-sidebar">
           <ul>
             {categories.map((item, index) => (
-              <li key={item}>
-                <span>{item}</span>
+              <li
+                key={item.label}
+                onClick={() =>
+                  item.slug
+                    ? navigate(`/category/${encodeURIComponent(item.slug)}`)
+                    : navigate("/category")
+                }
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    if (item.slug) {
+                      navigate(`/category/${encodeURIComponent(item.slug)}`);
+                    } else {
+                      navigate("/category");
+                    }
+                  }
+                }}
+              >
+                <span>{item.label}</span>
                 {index < 2 && (
                   <IoChevronForwardOutline className="sidebar-icon" />
                 )}
