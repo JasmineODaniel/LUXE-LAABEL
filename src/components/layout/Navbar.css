@@ -121,7 +121,7 @@
   position: absolute;
   top: 140%;
   right: 0;
-  width: 320px;
+  width: 360px;
   min-height: 200px;
   background: #fff;
   color: #111;
@@ -315,6 +315,8 @@
 }
 
 .cart-field input {
+  width: 100%;
+  box-sizing: border-box;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   padding: 10px 12px;
