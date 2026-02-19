@@ -87,6 +87,7 @@ export default function Hero() {
   const [showProduct, setShowProduct] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
   const addItem = useCartStore((s) => s.addItem);
 
   // Auto-slide
@@ -110,6 +111,18 @@ export default function Hero() {
     setShowProduct(false);
     setQuantity(1);
   }, [activeSlide]);
+
+  // Close product panel on outside click
+  useEffect(() => {
+    if (!showProduct) return;
+    const handler = (e: MouseEvent) => {
+      if (cardRef.current && !cardRef.current.contains(e.target as Node)) {
+        setShowProduct(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [showProduct]);
 
   const currentSlide = slides[activeSlide];
 
@@ -192,7 +205,7 @@ export default function Hero() {
           </div>
 
           {showProduct && (
-            <div className="hero-product-card">
+            <div className="hero-product-card" ref={cardRef}>
               <div className="hero-product__left">
                 <p className="hero-product__eyebrow">{currentSlide.eyebrow}</p>
                 <h3 className="hero-product__title">{currentSlide.name}</h3>
