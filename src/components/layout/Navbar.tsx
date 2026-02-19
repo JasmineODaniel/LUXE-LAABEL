@@ -14,6 +14,10 @@ export default function Navbar() {
   const [isLikesOpen, setIsLikesOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [email, setEmail] = useState("");
+  const [cardName, setCardName] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
+  const [expiry, setExpiry] = useState("");
+  const [cvc, setCvc] = useState("");
   const [emailSent, setEmailSent] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [isSending, setIsSending] = useState(false);
@@ -156,19 +160,70 @@ export default function Navbar() {
                       <span>Total</span>
                       <span>${cartTotal.toFixed(2)}</span>
                     </div>
-                    <div className="cart-email">
-                      <label htmlFor="checkout-email">Email for receipt</label>
-                      <input
-                        id="checkout-email"
-                        type="email"
-                        placeholder="you@gmail.com"
-                        value={email}
-                        onChange={(e) => {
-                          setEmail(e.target.value);
-                          setEmailError(null);
-                          setEmailSent(false);
-                        }}
-                      />
+
+                    <div className="cart-checkout-form">
+                      <div className="cart-field">
+                        <label htmlFor="card-name">Name on card</label>
+                        <input
+                          id="card-name"
+                          type="text"
+                          placeholder="Full name"
+                          value={cardName}
+                          onChange={(e) => setCardName(e.target.value)}
+                        />
+                      </div>
+                      <div className="cart-field">
+                        <label htmlFor="card-number">Card number</label>
+                        <input
+                          id="card-number"
+                          type="text"
+                          inputMode="numeric"
+                          placeholder="1234 5678 9012 3456"
+                          value={cardNumber}
+                          onChange={(e) => setCardNumber(e.target.value)}
+                          maxLength={19}
+                        />
+                      </div>
+                      <div className="cart-field cart-field--row">
+                        <div>
+                          <label htmlFor="expiry">Expiry</label>
+                          <input
+                            id="expiry"
+                            type="text"
+                            inputMode="numeric"
+                            placeholder="MM/YY"
+                            value={expiry}
+                            onChange={(e) => setExpiry(e.target.value)}
+                            maxLength={5}
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="cvc">CVC</label>
+                          <input
+                            id="cvc"
+                            type="text"
+                            inputMode="numeric"
+                            placeholder="123"
+                            value={cvc}
+                            onChange={(e) => setCvc(e.target.value)}
+                            maxLength={4}
+                          />
+                        </div>
+                      </div>
+                      <div className="cart-field">
+                        <label htmlFor="checkout-email">Email for receipt</label>
+                        <input
+                          id="checkout-email"
+                          type="email"
+                          placeholder="you@gmail.com"
+                          value={email}
+                          onChange={(e) => {
+                            setEmail(e.target.value);
+                            setEmailError(null);
+                            setEmailSent(false);
+                          }}
+                        />
+                      </div>
                       {emailError && (
                         <p className="cart-email__error">{emailError}</p>
                       )}
@@ -181,11 +236,29 @@ export default function Navbar() {
                       type="button"
                       disabled={isSending}
                       onClick={async () => {
-                        const valid = /\S+@\S+\.\S+/.test(email);
-                        if (!valid) {
+                        const emailValid = /\S+@\S+\.\S+/.test(email);
+                        const cardNumberClean = cardNumber.replace(/\s+/g, "");
+                        const cardValid =
+                          /^\d{13,19}$/.test(cardNumberClean) &&
+                          (cardNumberClean.startsWith("4") ||
+                            cardNumberClean.startsWith("5") ||
+                            cardNumberClean.startsWith("6"));
+                        const expiryValid = /^(0[1-9]|1[0-2])\/\d{2}$/.test(
+                          expiry
+                        );
+                        const cvcValid = /^\d{3,4}$/.test(cvc);
+
+                        if (!emailValid) {
                           setEmailError("Enter a valid email");
                           setEmailSent(false);
                           setSendError(null);
+                          return;
+                        }
+                        if (!cardName || !cardValid || !expiryValid || !cvcValid) {
+                          setSendError(
+                            "Enter valid card details (name, number, expiry, CVC)."
+                          );
+                          setEmailSent(false);
                           return;
                         }
                         setEmailError(null);
