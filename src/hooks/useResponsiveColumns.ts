@@ -7,7 +7,7 @@ type Breakpoint = {
 
 /**
  * Returns a responsive column count based on viewport breakpoints.
- * Keeps logic in one place so cards/carousels can stay in sync with CSS grids.
+ * Keeps logic in one place so cards/carousels can stay in sync with CSS grids. 
  */
 export function useResponsiveColumns(
   defaultCols: number,
