@@ -1,4 +1,4 @@
-// src/pages/ProductsPage.tsx
+// src/pages/ProductsPage.tsx 
 import React from "react";
 
 export default function ProductsPage() {
